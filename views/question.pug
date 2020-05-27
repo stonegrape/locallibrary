@@ -1,0 +1,21 @@
+div.form-group
+      label(for='author') Author:
+      select#author.form-control(type='select', placeholder='Select author' name='author' required='true' )
+        - authors.sort(function(a, b) {let textA = a.family_name.toUpperCase(); let textB = b.family_name.toUpperCase(); return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
+        for author in authors
+          if book
+            option(value=author._id selected=(author._id.toString()==book.author ? 'selected' : false) ) #{author.name}
+          else
+            option(value=author._id) #{author.name}
+
+authors.sort(
+    function(a, b) {
+        let textA = a.family_name.toUpperCase(); 
+        let textB = b.family_name.toUpperCase(); 
+        return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+        });
+
+The structure and behaviour of this code is the same as for creating our other objects.
+First we validate and sanitize the data. 
+    If the data is invalid, we then re-display the form along with the data that was originally entered by the user and a list of error messages.
+     If the data is valid, we save the new BookInstance record and redirect the user to the detail page.
